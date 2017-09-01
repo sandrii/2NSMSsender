@@ -55,6 +55,8 @@ def nform(pdu, sim=0):
     mes = at + str(pdulen(pdu)) + ',' + pdu + ',' + csum(pdu)
     return mes
 
-number = '+380637827077'
-text = 'Привіт'
-print(nform(topdu(number, text, dcs=1), sim=1))
+if __name__ == '__main__':
+        
+    number = str(input('Number:'))
+    text = str(input('Message:'))
+    print(nform(topdu(number, text), sim=1))
