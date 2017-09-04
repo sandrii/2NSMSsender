@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+#https://wiki.2n.cz/btwsgum/latest/en/4-list-of-at-commands/4-2-configuration-commands
 
 import re
-from smspdu import SMS_SUBMIT
+from smspdu import SMS_SUBMIT #git@github.com:SAndrii/smspdu.git
+from connect2n import connector
 
 def validnumber(num):
     error = 'Invalid phone number format'
@@ -59,4 +61,11 @@ if __name__ == '__main__':
         
     number = str(input('Number:'))
     text = str(input('Message:'))
-    print(nform(topdu(number, text), sim=1))
+    #print((nform(topdu(number, text), sim=1)))
+    status = connector((nform(topdu(number, text), sim=1)), sms=1)
+    if status[0].find('*smsout') == -1:
+        print('Sending sms, please wait')
+        while status[0].find('*smsout') == -1:
+            status = connector((nform(topdu(number, text), sim=1)), sms=1)
+    print('Sms was sent to ' + number)
+            
