@@ -24,10 +24,10 @@ def connector(mes, reunt='OK', sms=0):
         tn.write('at!g=a6\r'.encode())
         tn.read_until('OK'.encode())
         tn.write((mes + '\r').encode())
-        out.append(tn.read_until('*smsout: '.encode()))
+        out.append(tn.read_until('*smsout: '.encode()).decode('utf-8'))
         '''Deactivate sms control'''
         tn.write('at!g=55\r'.encode())
-        tn.read_until(''.encode())
+        tn.read_until('OK'.encode())
     else:
         tn.write((mes + '\r').encode())
         out.append(tn.read_until(reunt.encode()))
