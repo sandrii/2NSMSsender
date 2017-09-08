@@ -9,7 +9,7 @@ Example:
 
 import telnetlib, time
 
-def connector(mes, reunt='OK', sms=0):    
+def connector(mes, reunt='OK', sms=0, timeout=1):    
     out = []
     tn = telnetlib.Telnet('172.16.0.11')
     tn.write('\n\r'.encode())
@@ -40,7 +40,11 @@ def connector(mes, reunt='OK', sms=0):
                 tn.write('at!g=55\r'.encode())
                 tn.read_until('OK'.encode())
     else:
-        tn.write((mes + '\r').encode())
-        out.append(tn.read_until(reunt.encode()))
+        if timeout > 1:
+            tn.write((mes + '\r').encode())
+            out.append(tn.read_until(reunt.encode(), timeout))
+        else:
+            tn.write((mes + '\r').encode())
+            out.append(tn.read_until(reunt.encode()))
     tn.close()
     return out
