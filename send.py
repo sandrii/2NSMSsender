@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #https://wiki.2n.cz/btwsgum/latest/en/4-list-of-at-commands/4-2-configuration-commands
 
-import sys,getopt,re
+import sys, re
 from pduencode import encodeSmsSubmitPdu
 from connect2n import connector
 
@@ -57,6 +57,8 @@ def nform(pdu, sim=0):
 
 if __name__ == '__main__':
     
+    import getopt
+    
     message = None
     number = None
     flash = None
@@ -85,10 +87,10 @@ if __name__ == '__main__':
     else:
         dcs = 0
         
-    print (nform(topdu(number, message, dcs), sim=1))
-##    status = connector((nform(topdu(number, message, dcs), sim=1)), sms=1)
-##    if status[0].find('*smsout') == -1:
-##        print('Sending sms, please wait')
-##        while status[0].find('*smsout') == -1:
-##            status = connector((nform(topdu(number, message, dcs), sim=1)), sms=1)
-##    print('Sms was sent to ' + number)
+##    print (nform(topdu(number, message, dcs), sim=1))
+    status = connector((nform(topdu(number, message, dcs), sim=1)), sms=1)
+    if status[0].find('*smsout') == -1:
+        print('Sending sms, please wait')
+        while status[0].find('*smsout') == -1:
+            status = connector((nform(topdu(number, message, dcs), sim=1)), sms=1)
+    print('Sms was sent to ' + number)
