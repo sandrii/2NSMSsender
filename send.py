@@ -3,7 +3,7 @@
 #https://wiki.2n.cz/btwsgum/latest/en/4-list-of-at-commands/4-2-configuration-commands
 
 import sys,getopt,re
-from smspdu import SMS_SUBMIT #git@github.com:SAndrii/smspdu.git
+from pduencode import encodeSmsSubmitPdu
 from connect2n import connector
 
 def validnumber(num):
@@ -17,23 +17,18 @@ def validnumber(num):
             return num
         except AttributeError:
             print(error)
-            sys.exit(2)
+            sys.exit(1)
     else:
         print(error)
-        sys.exit(2)
+        sys.exit(1)
     
 def topdu(num, mes, dcs=0):
     if dcs == 1:
-        import unicodedata
-        s = unicodedata.name(mes[0]).partition(' ')[0]
-        if s == 'CYRILLIC':
-            TPDCS = 0x18
-        elif s == 'LATIN':
-            TPDCS = 0x10
-        pdud = SMS_SUBMIT.create(' ', validnumber(num), mes, tp_dcs=TPDCS)
+        pdud = encodeSmsSubmitPdu(validnumber(num), mes, sendFlash=True)
     else:
-        pdud = SMS_SUBMIT.create(' ', validnumber(num), mes)
-    return ('00' + pdud.toPDU())
+        pdud = encodeSmsSubmitPdu(validnumber(num), mes, sendFlash=False)
+    pdu = pdud.replace('0021000AA1', '0001000A81')
+    return (pdu)
 
 def pdulen(l):
     return int(len(l) / 2 - 1)
@@ -90,10 +85,10 @@ if __name__ == '__main__':
     else:
         dcs = 0
         
-##    print (nform(topdu(number, message, dcs), sim=1))
-    status = connector((nform(topdu(number, message, dcs), sim=1)), sms=1)
-    if status[0].find('*smsout') == -1:
-        print('Sending sms, please wait')
-        while status[0].find('*smsout') == -1:
-            status = connector((nform(topdu(number, message, dcs), sim=1)), sms=1)
-    print('Sms was sent to ' + number)
+    print (nform(topdu(number, message, dcs), sim=1))
+##    status = connector((nform(topdu(number, message, dcs), sim=1)), sms=1)
+##    if status[0].find('*smsout') == -1:
+##        print('Sending sms, please wait')
+##        while status[0].find('*smsout') == -1:
+##            status = connector((nform(topdu(number, message, dcs), sim=1)), sms=1)
+##    print('Sms was sent to ' + number)
