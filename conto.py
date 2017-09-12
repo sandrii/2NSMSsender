@@ -8,7 +8,7 @@ def conto(sim):
     error = 'SIM card is busy now'
     if out.find('BUSY') != -1:
         return error
-        sys.exit(2)
+        sys.exit(1)
     try:
         hv = re.search('OK: (.+?) HV', out).group(1)
         mhv = re.search('NI; (.+?) HV', out).group(1)
@@ -16,7 +16,7 @@ def conto(sim):
         return (hv[:-3], mhv[:-3], sms)
     except AttributeError:
         return error
-        sys.exit(2)
+        sys.exit(1)
 
 for i in range(0,6):
 	print(conto(i))
