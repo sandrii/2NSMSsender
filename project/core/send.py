@@ -3,8 +3,8 @@
 #https://wiki.2n.cz/btwsgum/latest/en/4-list-of-at-commands/4-2-configuration-commands
 
 import sys, re
-from pduencode import encodeSmsSubmitPdu
-from connect2n import connector
+from .pduencode import encodeSmsSubmitPdu
+from .connect2n import connector
 
 def validnumber(num):
     error = 'Invalid phone number format'
