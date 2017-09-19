@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import sys, codecs
 
 MAX_MESSAGE_LENGTH = {0x00: 160, # GSM-7

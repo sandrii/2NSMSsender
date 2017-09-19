@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </head>
   <body>
+  {% from "_formhelpers.html" import render_field %}
     <div class="container">
       <form action="/send" method="POST">
       <h1><strong>2N Bluestar SMS Sender Form</strong></h1>
@@ -58,10 +59,13 @@
             <div class="alert alert-info alert-dismissible">{{ info_message }}</div>
             
           {% endfor %}
+    <div class="footer">
+      <hr>
+      <p>Shvorak Andriy - CSZDTU - 2017</p>
+    </div>
  
     <!-- scripts -->
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
   </body>
 </html>

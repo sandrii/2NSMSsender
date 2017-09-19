@@ -17,10 +17,8 @@ def validnumber(num):
             return num
         except AttributeError:
             print(error)
-            sys.exit(1)
     else:
         print(error)
-        sys.exit(1)
     
 def topdu(num, mes, dcs=0):
     if dcs == 1:
