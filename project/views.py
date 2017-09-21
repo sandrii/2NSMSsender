@@ -29,7 +29,7 @@ def send():
         if form.validate_on_submit():
             message = request.form['message']
             s = unicodedata.name(message[0]).partition(' ')[0]
-            if (s == 'LATIN' and len(message) <= 160) or (s == 'CYRYLIC' and len(message) <=70):
+            if (s == 'LATIN' and len(message) <= 160) or (s == 'CYRILLIC' and len(message) <=70):
                 pass
             else:
                 flash('ERROR! message lehght must be less 160 character in english or 70 in cyrrilic ', 'error')
