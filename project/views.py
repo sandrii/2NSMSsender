@@ -4,19 +4,23 @@
 # -*- coding: utf-8 -*-
 
 import unicodedata
+from time import gmtime, strftime, localtime
 from . import app
 from flask import render_template, Blueprint, request, redirect, url_for, flash
 from .core.send import nform, topdu, validnumber
 from .core.connect2n import connector
 from .forms import AddSMSForm
 
+def logger(n, m):
+    from time import gmtime, strftime, localtime
+    stamp = strftime('%d %b %Y %a, %H:%M:%S', localtime())
+    return (stamp +  '\t' + n + '\t' + m + '\n')
+
+
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
-            flash(u'Error in the %s field - %s' % (
-                getattr(form, field).label.text,
-                error
-            ), 'info')
+            flash('Error in the {} field - {}'.format(getattr(form, field).label.text, error), 'info')
  
 @app.route('/')
 def index():
@@ -40,6 +44,10 @@ def send():
                     dcs = 1
                 else:
                     dcs = 0
+                print (message)
+                with open('loger.txt', 'a') as f:
+                    f.write(logger(number, message))
+                    f.close()
                 status = connector((nform(topdu(number, message, dcs), sim=0)), sms=1)
                 if status[0].find('*smsout') == -1:
                     flash('Sending sms, please wait', 'info')
