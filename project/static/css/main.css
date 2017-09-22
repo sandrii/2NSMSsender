@@ -3,8 +3,13 @@ body {
   background: #ffffff;
 }
 
-
 .error {
   color: red;
   font-size: .8em;
+}
+
+form textarea{
+     width: 200px;
+     height: 200px;
+     max-width: 200px;
 }

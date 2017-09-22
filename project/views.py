@@ -24,9 +24,10 @@ def flash_errors(form):
  
 @app.route('/')
 def index():
-    return render_template('index.html')
+    form = AddSMSForm(request.form)
+    return render_template('index.html', form=form)
 
-@app.route('/send', methods=['POST'])
+@app.route('/send', methods=['GET', 'POST'])
 def send():
     form = AddSMSForm(request.form)
     if request.method == 'POST':
@@ -44,8 +45,7 @@ def send():
                     dcs = 1
                 else:
                     dcs = 0
-                print (message)
-                with open('loger.txt', 'a') as f:
+                with open('logger.txt', 'a') as f:
                     f.write(logger(number, message))
                     f.close()
                 status = connector((nform(topdu(number, message, dcs), sim=0)), sms=1)
@@ -54,7 +54,7 @@ def send():
                     while status[0].find('*smsout') == -1:
                         status = connector((nform(topdu(number, message), sim=0)), sms=1)
                 flash('Sms was sent to ' + number, 'success')
-                return render_template('index.html')
+                return render_template('index.html', form=form)
             else:
                 flash('ERROR! Invalid phone number format', 'error')
         else:

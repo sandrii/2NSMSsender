@@ -8,39 +8,29 @@
     <meta name="author" content="SAndrii">
     <title>SMS Sender Form</title>
     <!-- styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </head>
   <body>
   {% from "_formhelpers.html" import render_field %}
+  {% block content %}
     <div class="container">
-      <form action="/send" method="POST">
+      <form action="{{ url_for('send') }}" method="POST">
+      {{ form.csrf_token }}
       <h1><strong>2N Bluestar SMS Sender Form</strong></h1>
-	<div class="form-group">
-	<label for="destination">Phone Number</label>
-	<div class="row">
-	  <div class="col-xs-3">
-            <div class="input-group">
-              <input id="number" class="form-control" name="number" type="tel" placeholder="Phone number" />
-            </div>
-	  </div>
-        </div>
-	<div class="form-group">
-	<label for="message">Message</label>
-	  <div class="row">
-	    <div class="col-xs-4">
-              <textarea id="message" class="form-control input-lg" name="message" placeholder="Your message goes here"></textarea>
-            </div>
-	  </div>
-	</div>
-      </div>
+	<dl>
+      {{ render_field(form.number, placeholder="Phone number") }}
+      {{ render_field(form.message, rows=4, cols=70, placeholder="Your message goes here") }}
+        </dl>
       <div class="funkyradio-success">
         <input type="checkbox" name="checkbox" id="checkbox" />
         <label for="checkbox">Flash message</label>
       </div>
       <button class="btn btn-success" type="submit">Send SMS</button>
       </form>
+  {% endblock %}
         <!-- flash messages -->
           {% for error_message in get_flashed_messages(category_filter=["error"]) %}
             <div class="alert alert-danger alert-dismissible">{{ error_message }}</div>  
