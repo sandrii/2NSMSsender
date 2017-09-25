@@ -8,9 +8,8 @@
     <meta name="author" content="SAndrii">
     <title>SMS Sender Form</title>
     <!-- styles -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/my.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </head>
   <body>
@@ -20,30 +19,40 @@
       <form action="{{ url_for('send') }}" method="POST">
       {{ form.csrf_token }}
       <h1><strong>2N Bluestar SMS Sender Form</strong></h1>
-	<dl>
-      {{ render_field(form.number, placeholder="Phone number") }}
-      {{ render_field(form.message, rows=4, cols=70, placeholder="Your message goes here") }}
-        </dl>
+	  <h1></h1>
+	  <dl>
+      {{ render_field(form.number, placeholder="Phone number", list="option") }}
+	    <datalist id="option">
+        {% for o in opt %}
+          <option value="{{ opt.get(o) }}">{{ opt.get(o) }}</option>
+        {% endfor %}
+        </datalist>
+	  <h1></h1>
+      {{ render_field(form.message, placeholder="Your message goes here") }}
+      </dl>
       <div class="funkyradio-success">
         <input type="checkbox" name="checkbox" id="checkbox" />
         <label for="checkbox">Flash message</label>
       </div>
-      <button class="btn btn-success" type="submit">Send SMS</button>
+	  <h1></h1>
+      <button class="button button2" type="submit"><span class="blinkme">Send SMS</span></button>
+	  
       </form>
+	  <h1></h1>
   {% endblock %}
-        <!-- flash messages -->
-          {% for error_message in get_flashed_messages(category_filter=["error"]) %}
-            <div class="alert alert-danger alert-dismissible">{{ error_message }}</div>  
-          {% endfor %}
-          {% for success_message in get_flashed_messages(category_filter=["success"]) %}
-            <div class="alert alert-success alert-dismissible">{{ success_message }}</div>           
-          {% endfor %}
-          {% for info_message in get_flashed_messages(category_filter=["info"]) %}
-            <div class="alert alert-info alert-dismissible">{{ info_message }}</div>
-          {% endfor %}
+    <!-- flash messages -->
+        {% for error_message in get_flashed_messages(category_filter=["error"]) %}
+        <div class="alert alert-danger alert-dismissible">{{ error_message }}</div>  
+        {% endfor %}
+        {% for success_message in get_flashed_messages(category_filter=["success"]) %}
+        <div class="alert alert-success alert-dismissible">{{ success_message }}</div>           
+        {% endfor %}
+        {% for info_message in get_flashed_messages(category_filter=["info"]) %}
+        <div class="alert alert-info alert-dismissible">{{ info_message }}</div>
+        {% endfor %}
     <div class="footer">
       <hr>
-      <p>SAndrii - SZDTU - 2017</p>
+      <p>SAndrii - szdtu - 2017</p>
     </div>
  
     <!-- scripts -->
