@@ -23,7 +23,7 @@ h1{
     font-size: .8em;
 }
 input[type=text] {
-    width: 13%;
+    width: 15%;
     padding: 12px 20px;
     box-sizing: border-box;
     border: 2px solid #ccc;

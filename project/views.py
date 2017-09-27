@@ -73,6 +73,7 @@ def send():
 					f.write(logger(u, message))
 					f.close()
 				flash('Sms was sent to ' + u, 'success')
+			return redirect(url_for('index'))
 			return render_template('index.html', form=form)
 		else:
 			flash_errors(form)
