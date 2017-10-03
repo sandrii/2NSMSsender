@@ -23,7 +23,6 @@ def logger(n, m):
     stamp = strftime('%d %b %Y %a, %H:%M:%S', localtime())
     return (stamp +  '\t' + n + '\t' + m + '\n')
 
-
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
@@ -58,7 +57,6 @@ def send():
 			else:
 				flash('ERROR! Invalid phone number format', 'error')
 				return render_template('index.html', form=form)
-			print(tel)
 			if request.form.get('checkbox'):
 				dcs = 1
 			else:

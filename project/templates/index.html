@@ -19,7 +19,7 @@
       <form action="{{ url_for('send') }}" method="POST">
       {{ form.csrf_token }}
       <h1><strong>2N Bluestar SMS Sender Form</strong></h1>
-	  <h1></h1>
+	  <br></br>
 	  <dl>
       {{ render_field(form.number, placeholder="Phone number", list="option") }}
 	    <datalist id="option">
@@ -27,18 +27,15 @@
           <option value="{{ opt.get(o) }}">{{ opt.get(o) }}</option>
         {% endfor %}
         </datalist>
-	  <h1></h1>
       {{ render_field(form.message, placeholder="Your message goes here") }}
       </dl>
       <div class="funkyradio-success">
         <input type="checkbox" name="checkbox" id="checkbox" />
         <label for="checkbox">Flash message</label>
       </div>
-	  <h1></h1>
+	  <br></br>
       <button class="button button2" type="submit"><span class="blinkme">Send SMS</span></button>
-	  
       </form>
-	  <h1></h1>
   {% endblock %}
     <!-- flash messages -->
         {% for error_message in get_flashed_messages(category_filter=["error"]) %}
@@ -54,7 +51,6 @@
       <hr>
       <p>SAndrii - szdtu - 2017</p>
     </div>
- 
     <!-- scripts -->
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
